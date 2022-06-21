@@ -26,6 +26,17 @@ describe('list of authors', () => {
     });
   });
 
+  it('POST /authors should add a new author', async () => {
+    const resp = await request(app).post('/authors').send({
+      name: 'Isuna Hasekura',
+      dob: '1982',
+    });
+    expect(resp.status).toEqual(200);
+    expect(resp.body.name).toEqual('Isuna Hasekura');
+    expect(resp.body.dob).toEqual('1982');
+    expect(resp.body.id).not.toBeUndefined();
+  });
+
   afterAll(() => {
     pool.end();
   });

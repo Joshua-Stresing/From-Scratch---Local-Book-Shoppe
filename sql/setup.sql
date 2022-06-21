@@ -2,6 +2,7 @@
 -- The SQL in this file will be executed when you run `npm run setup-db`
 DROP TABLE if exists books;
 DROP TABLE if exists authors;
+DROP TABLE if exists bookauth;
 
 CREATE TABLE books (
     id BIGINT GENERATED ALWAYS AS IDENTITY,
@@ -21,7 +22,7 @@ CREATE TABLE bookauth (
     book_id INT NOT NULL,
     FOREIGN KEY (book_id) REFERENCES books(id),
     FOREIGN KEY (author_id) REFERENCES authors(id)
-)
+);
 
 INSERT INTO books (name, released)
 VALUES ('Spice and Wolf', 2006), ('Mushoku Tensei', 2014), ('Combo Test', 2022);
@@ -29,8 +30,6 @@ VALUES ('Spice and Wolf', 2006), ('Mushoku Tensei', 2014), ('Combo Test', 2022);
 INSERT INTO authors (name, dob)
 VALUES ('Isuna Hasekura', '1982'), ('Rifujin na Magonote', 'N/A');
 
-INSERT INTO bookauth (
-    author_id
-    book_id
-)
+INSERT INTO bookauth (author_id, book_id)
 VALUES
+(1, 1), (2, 2), (1, 3), (2, 3);
