@@ -16,6 +16,16 @@ describe('list of authors', () => {
     expect(saw).toHaveProperty('dob', '1982');
   });
 
+  it('/authors/:id should return authors details', async () => {
+    const resp = await request(app).get('/authors/1');
+    expect(resp.status).toEqual(200);
+    expect(resp.body).toEqual({
+      id: '1',
+      name: 'Isuna Hasekura',
+      dob: '1982',
+    });
+  });
+
   afterAll(() => {
     pool.end();
   });

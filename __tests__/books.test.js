@@ -16,6 +16,16 @@ describe('list of books', () => {
     expect(saw).toHaveProperty('released', 2006);
   });
 
+  it('/books/:id should return books details', async () => {
+    const resp = await request(app).get('/books/1');
+    expect(resp.status).toEqual(200);
+    expect(resp.body).toEqual({
+      id: '1',
+      name: 'Spice and Wolf',
+      released: 2006,
+    });
+  });
+
   afterAll(() => {
     pool.end();
   });
