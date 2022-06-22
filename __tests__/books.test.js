@@ -10,7 +10,7 @@ describe('list of books', () => {
 
   it('should fetch and return a list of books', async () => {
     const res = await request(app).get('/books');
-    expect(res.body.length).toEqual(2);
+    expect(res.body.length).toEqual(3);
     const saw = res.body.find((char) => char.id === '1');
     expect(saw).toHaveProperty('name', 'Spice and Wolf');
     expect(saw).toHaveProperty('released', 2006);
@@ -24,6 +24,17 @@ describe('list of books', () => {
       name: 'Spice and Wolf',
       released: 2006,
     });
+  });
+
+  it('POST /books should add a new book', async () => {
+    const resp = await request(app).post('/books').send({
+      name: 'Spice and Wolf',
+      released: 2006,
+    });
+    expect(resp.status).toEqual(200);
+    expect(resp.body.name).toEqual('Spice and Wolf');
+    expect(resp.body.released).toEqual(2006);
+    expect(resp.body.id).not.toBeUndefined();
   });
 
   afterAll(() => {
