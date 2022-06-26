@@ -8,6 +8,18 @@ describe('list of books', () => {
     return setup(pool);
   });
 
+  it('POST /books should create a new book with an author', async () => {
+    const resp = await request(app)
+      .post('/books')
+      .send({ name: 'Spice and Wolf', released: 2006, authorIds: [1, 2] });
+    expect(resp.status).toBe(200);
+    expect(resp.body.name).toBe('Spice and Wolf');
+
+    const { body: saw } = await request(app).get(`/books/${resp.body.id}`);
+    console.log(saw);
+    expect(saw.authors.length).toBe(2);
+  });
+
   it('should fetch and return a list of books', async () => {
     const res = await request(app).get('/books');
     expect(res.body.length).toEqual(3);
@@ -23,6 +35,14 @@ describe('list of books', () => {
       id: '1',
       name: 'Spice and Wolf',
       released: 2006,
+
+      authors: [
+        {
+          dob: '1982',
+          id: 1,
+          name: 'Isuna Hasekura',
+        },
+      ],
     });
   });
 
